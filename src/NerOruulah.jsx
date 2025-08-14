@@ -1,20 +1,44 @@
-import React from "react";
-import { useBurtgel } from "./Burtgel";
+import React from 'react';
+import { useBurtgel } from './Burtgel';
 
 export default function NerOruulah() {
-    const { setNer } = useBurtgel();
-    const {text, setText} = React.useState('');
-    const [nuutsUg, setNuutsUg] = React.useState('');
+  const { setNuutsUg, setNer, burtguuleh, user } = useBurtgel();
+  const [nerText, setNerText] = React.useState('');
+  const [nuutsText, setNuutsText] = React.useState('');
 
-    return (
-        <div>
-            
-            <input type="text" value={text} onChange={(event) => setText(event.target.value)} placeholder='Нэр оруулна уу'/>
-            <button onClick={() => {setNer(text); setNuutsUg(nuutsUg);}}>Нэр оруулах</button>
-            <br />
-            <input type="password" value={nuutsUg} onChange={(event) => setNuutsUg(event.target.value)} placeholder='Нууц үг оруулна уу'/>
-            
-            <button onClick={() => {setNuutsUg(nuutsUg);}}>Нууц үг оруулах</button>
-        </div>
-    );
+const nevtreh = () => {
+  const olduser = user.find((u) => u.ner === nerText && u.nuutsUg === nuutsText);
+  if (!olduser) {
+    alert('Таны нэр эсвэл нууц үг буруу байна.');
+    return; 
+  }
+    
+    setNer(olduser.ner);
+    setNuutsUg(olduser.nuutsUg);
+    alert('Та амжилттай нэвтэрлээ.');
+  };
+
+  return (
+    <div>
+      <h1>Нэр оруулах</h1>
+      <input
+        type="text"
+        value={nerText}
+        onChange={(event) => setNerText(event.target.value)}
+      />
+      <br />
+      <input
+        type="password"
+        value={nuutsText}
+        onChange={(event) => setNuutsText(event.target.value)}
+        placeholder="Нууц үг оруулах"/>
+      
+      <button
+        onClick={() => burtguuleh(nerText, nuutsText)}>
+        burtguuleh
+        </button>
+      <button onClick={nevtreh}>Нэвтрэх</button>
+
+    </div>
+  );  
 }
